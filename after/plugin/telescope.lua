@@ -4,7 +4,7 @@ require('telescope').setup {
     selection_caret = '» ',
     dynamic_preview_title = true,
     wrap_results = true,
-    file_ignore_patterns = { '^.git/', 'db', 'gif', 'jpeg', 'jpg', 'ods', 'odt', 'pdf', 'png', 'svg', 'xcf', 'xls' },
+    file_ignore_patterns = { '.git/', 'db', 'gif', 'jpeg', 'jpg', 'ods', 'odt', 'pdf', 'png', 'svg', 'xcf', 'xls' },
     layout_strategy = 'bottom_pane',
     sorting_strategy = 'ascending',
     layout_config = {
