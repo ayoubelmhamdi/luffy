@@ -3,7 +3,7 @@ require('telescope').setup {
     prompt_prefix = '∷ ',
     selection_caret = '» ',
     dynamic_preview_title = true,
-    wrap_results = true,
+    wrap_results = false,
     file_ignore_patterns = { '.git/', 'db', 'gif', 'jpeg', 'jpg', 'ods', 'odt', 'pdf', 'png', 'svg', 'xcf', 'xls' },
     layout_strategy = 'bottom_pane',
     sorting_strategy = 'ascending',
