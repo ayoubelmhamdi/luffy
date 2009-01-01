@@ -8,7 +8,7 @@ augroup General
   autocmd BufRead,BufNewFile *.conf		setfiletype bash
   autocmd BufRead,BufNewFile *.fish		setfiletype fish
   autocmd BufWritePost X{resources,defaults} silent !xrdb %
-  autocmd FileType txt,markdown,asciidoc*,rst if &filetype !~ 'man\|help' | setlocal spell | endif
+  autocmd FileType txt,markdown,asciidoc*,rst if &filetype !~ 'man\|help' | setlocal spell spelllang=fr,en_us | endif
   autocmd FileType help,man,startuptime,qf,lspinfo,checkhealth nnoremap <buffer><silent>q :bdelete<CR>
   autocmd BufWinEnter * if &previewwindow | setlocal nofoldenable | endif
 augroup END
