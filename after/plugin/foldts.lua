@@ -1,4 +1,5 @@
 -- NOTE: this file is a modified version of fold.lua from nvim-treesitter
+if true then return end
 
 local log = require('navigator.util').log
 local trace = require('navigator.util').trace
