@@ -81,6 +81,6 @@ require('packer').startup(function()
 
     use { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
     use { 'ggandor/leap.nvim' }
+    use {'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async'}
 end)
-
--- vim.cmd [[autocmd BufWritePost init.lua source <afile> | PackerCompile]]
+vim.cmd [[autocmd BufWritePost packer source <afile> | PackerCompile]]

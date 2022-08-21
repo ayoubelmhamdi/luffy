@@ -1,0 +1,12 @@
+vim.o.hidden = true
+vim.o.fileencoding = "utf-8"
+--vim.o.termguicolors = true
+vim.o.splitbelow = true
+vim.o.splitright = true
+--vim.o.conceallevel = 0 -- So that I can see `` in markdown files
+--vim.wo.number = true
+--vim.wo.relativenumber = true
+vim.o.backup = false
+vim.o.writebackup = false
+vim.wo.signcolumn = "yes"
+--vim.o.clipboard = "unnamedplus"
