@@ -20,7 +20,15 @@ packer.startup(function()
   use { 'wbthomason/packer.nvim', requires = { 'nvim-lua/popup.nvim', 'kyazdani42/nvim-web-devicons' } }
 
   -- LSP
-  use { 'neovim/nvim-lspconfig', requires = 'SmiteshP/nvim-navic' }
+  use {
+    'neovim/nvim-lspconfig',
+    requires = {
+      'folke/lua-dev.nvim',
+      'kosayoda/nvim-lightbulb',
+      'SmiteshP/nvim-navic',
+      'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
+    },
+  }
   use { 'onsails/lspkind-nvim' }
   use { 'jose-elias-alvarez/null-ls.nvim' }
   use { 'akinsho/flutter-tools.nvim' }
@@ -49,15 +57,17 @@ packer.startup(function()
 
   -- nvim-cmp
   use { 'hrsh7th/nvim-cmp' }
+  use { 'hrsh7th/cmp-nvim-lua' }
+  use { 'hrsh7th/cmp-nvim-lsp' }
+  use { 'hrsh7th/cmp-nvim-lsp-signature-help' }
+  use { 'hrsh7th/cmp-buffer' }
+  use { 'hrsh7th/cmp-path' }
+  use { 'hrsh7th/cmp-cmdline' }
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip' }
-  use { 'hrsh7th/cmp-buffer' }
-  use { 'hrsh7th/cmp-nvim-lua' }
-  use { 'hrsh7th/cmp-emoji' }
-  use { 'hrsh7th/cmp-nvim-lsp' }
-  use { 'hrsh7th/cmp-path' }
-  use { 'octaltree/cmp-look' }
   use { 'f3fora/cmp-spell' }
+  -- use { 'hrsh7th/cmp-emoji' }
+  -- use { 'octaltree/cmp-look' }
 
   -- dap
   use { 'mfussenegger/nvim-dap' }
@@ -102,5 +112,6 @@ packer.startup(function()
   use { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
   use { 'ggandor/leap.nvim' }
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+  -- use { 'antoinemadec/FixCursorHold.nvim' }
 end)
-vim.cmd [[autocmd BufWritePost packer source <afile> | PackerCompile]]
+vim.cmd [[autocmd BufWritePost packer.lua source <afile> | PackerCompile]]
