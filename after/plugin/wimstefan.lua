@@ -16,7 +16,6 @@ vim.opt.autowrite = true
 vim.opt.modelineexpr = true
 vim.opt.keywordprg = ':help'
 
-My_Borders = 'rounded'
 
 -- diagnostic handling
 local diagnostic_signs = { '', '', '', '' }
@@ -42,7 +41,7 @@ for index, icon in ipairs(diagnostic_signs) do
 end
 vim.diagnostic.config {
   float = {
-    border = My_Borders,
+      border = 'rounded',
     header = '',
     focusable = false,
     scope = 'cursor',
