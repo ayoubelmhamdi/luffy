@@ -1,15 +1,6 @@
 require("luasnip.loaders.from_lua").lazy_load()
--- require "ls"
--- require "ls.ay_efm"
 require("flutter-tools").setup {}
 -- require('tsp')
-
-local todo_comments = require "todo-comments"
-local colorizer = require "colorizer"
-
-
-todo_comments.setup {}
-colorizer.setup()
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
     underline = true,
