@@ -3,11 +3,28 @@
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 -- capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
+vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+  underline = true,
+  update_in_insert = false,
+  virtual_text = true,
+})
+vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+
 local on_attach = function(client, bufnr)
   require('nvim-navic').attach(client, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
   local opts = { noremap = true, silent = true, buffer = bufnr }
+
+  vim.keymap.set('n', ',lR', require('telescope.builtin').lsp_definitions, opts)
+  vim.keymap.set('n', ',lr', require('telescope.builtin').lsp_references, opts)
+  vim.keymap.set('n', ',ly', require('telescope.builtin').lsp_document_symbols, opts)
+  vim.keymap.set('n', ',lY', require('telescope.builtin').lsp_workspace_symbols, opts)
+  vim.keymap.set('n', ',ld', function()
+    require('telescope.builtin').diagnostics { bufnr = 0 }
+  end, opts)
+  vim.keymap.set('n', ',lD', require('telescope.builtin').diagnostics, opts)
+  vim.keymap.set('n', ',lrn', vim.lsp.buf.rename, { desc = 'LSP: rename' }, { buffer = bufnr })
 
   -- keymap
   vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
@@ -44,8 +61,7 @@ local on_attach = function(client, bufnr)
   vim.keymap.set('n', ',df', vim.diagnostic.open_float)
   vim.keymap.set('n', ',dl', vim.diagnostic.setloclist)
   vim.keymap.set('n', ',dq', vim.diagnostic.setqflist)
-
-  -- ovrride by nvim-ufo
+  --
   -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 end
 
@@ -58,24 +74,75 @@ for _, lsp in pairs(servers) do
   }
 end
 
-require('lspconfig').sumneko_lua.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  cmd = { 'sumneko' },
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT' },
-      diagnostics = { globals = { 'vim' } },
-      workspace = {
-        library = vim.api.nvim_get_runtime_file('', true),
+-- lua
+local runtime_path = vim.split(package.path, ';')
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
+local lua_dev = require('lua-dev').setup {
+  library = {
+    vimruntime = true,
+    types = true,
+    plugins = true,
+  },
+  lspconfig = {
+    capabilities = capabilities,
+    cmd = { 'sumneko' },
+    on_attach = on_attach,
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT',
+          path = runtime_path,
+        },
+        diagnostics = {
+          enable_check_codestyle = true,
+          globals = {
+            'packer_plugins',
+            'use',
+            'vim',
+          },
+          neededFileStatus = {
+            codestyle_check = 'Any',
+          },
+        },
+        format = {
+          enable = true,
+          defaultConfig = {
+            indent_style = 'space',
+            indent_size = 2,
+            continuation_indent_size = 4,
+            quote_style = 'single',
+            call_arg_parentheses = 'keep',
+            local_assign_continuation_align_to_first_expression = true,
+            align_call_args = true,
+            align_function_define_params = true,
+            align_table_field_to_first_field = true,
+            keep_one_space_between_table_and_bracket = true,
+            keep_one_space_between_namedef_and_attribute = false,
+            continuous_assign_statement_align_to_equal_sign = true,
+            continuous_assign_table_field_align_to_equal_sign = true,
+            do_statement_no_indent = false,
+            if_condition_no_continuation_indent = false,
+            if_condition_align_with_each_other = true,
+          },
+        },
+        workspace = {
+          library = {
+            vim.api.nvim_get_runtime_file('', true),
+          },
         checkThirdParty = false, -- FIX the sumneko need config
         -- Make the server await for loading Neovim runtime files
-        maxPreload = 2000,
-        preloadFileSize = 50000,
-      },
-      telemetry = {
-        enable = false,
+        maxPreload = 1000,
+        preloadFileSize = 500,
+
+        },
+        telemetry = {
+          enable = false,
+        },
       },
     },
   },
 }
+
+
+require('lspconfig').sumneko_lua.setup(lua_dev)
