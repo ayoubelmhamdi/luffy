@@ -1,3 +1,6 @@
+require('luasnip.loaders.from_lua').lazy_load()
+require('luasnip/loaders/from_snipmate').lazy_load()
+
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 vim.g.mapleader = ' '
@@ -8,12 +11,7 @@ local ls = require 'luasnip'
 -- local lspkind = require("lspkind")
 local types = require 'luasnip.util.types'
 
-
-
-
-
-
--- 
+--
 My_Symbols = {
   Array = ' ', -- '謹',
   Boolean = ' ', --'ﬧ ',
@@ -65,15 +63,18 @@ cmp.setup {
       ls.lsp_expand(args.body)
     end,
   },
-
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
     ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-u>'] = cmp.mapping.scroll_docs(4),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<c-y>'] = cmp.mapping(
+    ['<C-y>'] = cmp.mapping.abort(),
+    ['<c-e>'] = cmp.mapping(
       cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
@@ -105,11 +106,32 @@ cmp.setup {
   },
   sources = cmp.config.sources {
     { name = 'luasnip', priority = 100 }, -- For luasnip users.
-    { name = 'path' },
-    { name = 'nvim_lsp' },
-    { name = 'buffer' },
     { name = 'nvim_lua' },
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lsp_signature_help' },
+    { name = 'path', option = { trailing_slash = true } },
     { name = 'cmp_tabnine' },
+    { name = 'spell' },
+    {
+      name = 'buffer',
+      option = {
+        get_bufnrs = function()
+          local buf = vim.api.nvim_get_current_buf()
+          local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+          if byte_size > 2048 * 2048 then
+            return {}
+          end
+          return { buf }
+        end,
+      },
+    },
+  },
+  sorting = {
+    comparators = {
+      function(...)
+        return require('cmp_buffer'):compare_locality(...)
+      end,
+    },
   },
   experimental = {
     native_menu = false,
@@ -147,6 +169,28 @@ cmp.setup {
   --           end
   --       },
 }
+
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    {
+      name = 'path',
+      option = {
+        trailing_slash = true,
+      },
+    },
+  }, {
+    { name = 'nvim_lua' },
+  }, {
+    { name = 'cmdline' },
+  }),
+})
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources {
+    { name = 'buffer' },
+  },
+})
 
 -- TODO to lua
 _ = vim.cmd [[
