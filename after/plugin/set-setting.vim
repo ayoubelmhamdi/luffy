@@ -1,6 +1,6 @@
 " fold
-set foldmethod=marker
-set fillchars=fold:\ 
+" set foldmethod=marker
+" set fillchars=fold:\ 
 
 "set scrolloff=99
 "set sidescrolloff=99
