@@ -1,5 +1,3 @@
---
-
 local treesitter = require 'nvim-treesitter.configs'
 local i = require 'nvim-treesitter.install'
 
@@ -31,7 +29,6 @@ treesitter.setup {
 
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = false,
   },
   rainbow = {
     enable = true,
@@ -97,10 +94,6 @@ treesitter.setup {
   --
 }
 
--- vim.api.nvim_create_autocmd({ "BufEnter", "BufAdd", "BufNew", "BufNewFile", "BufWinEnter" }, {
---     group = vim.api.nvim_create_augroup("TS_FOLD_WORKAROUND", {}),
---     callback = function()
---         vim.opt.foldmethod = "expr"
---         vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
---     end,
--- })
+require('spellsitter').setup {
+  enable = true,
+}
