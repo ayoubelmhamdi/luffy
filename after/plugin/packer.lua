@@ -32,7 +32,7 @@ packer.startup(function()
   use 'lewis6991/spellsitter.nvim'
 
   use { 'onsails/lspkind-nvim' }
-  use { 'jose-elias-alvarez/null-ls.nvim' }
+  use { 'jose-elias-alvarez/null-ls.nvim', requires = { 'ThePrimeagen/refactoring.nvim' } }
   use { 'akinsho/flutter-tools.nvim' }
   use { 'glepnir/lspsaga.nvim' }
   use { 'ray-x/lsp_signature.nvim' }
