@@ -29,6 +29,8 @@ packer.startup(function()
       'https://git.sr.ht/~whynothugo/lsp_lines.nvim',
     },
   }
+  use 'lewis6991/spellsitter.nvim'
+
   use { 'onsails/lspkind-nvim' }
   use { 'jose-elias-alvarez/null-ls.nvim' }
   use { 'akinsho/flutter-tools.nvim' }
@@ -41,7 +43,7 @@ packer.startup(function()
     requires = { 'nvim-lua/plenary.nvim', { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' } },
   }
 
-  -- tree-Sitter: "nvim-treesitter/nvim-treesitter"
+  -- tree-Sitter
   use {
     -- 'thmsmlr/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter',
@@ -49,11 +51,11 @@ packer.startup(function()
       'nvim-treesitter/nvim-treesitter-textobjects',
       'p00f/nvim-ts-rainbow',
       'JoosepAlviste/nvim-ts-context-commentstring',
+      'David-Kunz/treesitter-unit',
+      'lewis6991/spellsitter.nvim',
       -- 'windwp/nvim-ts-autotag',
     },
   }
-  use { 'David-Kunz/treesitter-unit' }
-  use { 'lewis6991/spellsitter.nvim' }
 
   -- nvim-cmp
   use { 'hrsh7th/nvim-cmp' }
@@ -114,4 +116,5 @@ packer.startup(function()
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
   -- use { 'antoinemadec/FixCursorHold.nvim' }
 end)
-vim.cmd [[autocmd BufWritePost packer.lua source <afile> | PackerCompile]]
+
+-- vim.cmd [[autocmd BufWritePost packer.lua source <afile> | PackerCompile]]
