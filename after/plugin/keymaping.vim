@@ -1,7 +1,7 @@
 "
 nnoremap <C-W><C-S> :vert sbN<cr>
 nnoremap gn :tabnew<CR>
-
+nnoremap q: :q
 " Telescope:
 nnoremap <Space>fd  :Telescopefindfiledart<cr>
 nnoremap <Space>fs  :Telescope current_buffer_fuzzy_find<cr>
@@ -145,7 +145,7 @@ command! Telescopefy Telescope frecency default_text=:CWD:
 command! Reloader lua require('telescope').reloader()
 
 command! Ps PackerSync
-command! Pi PackerInstall
+command! Pi source % | PackerCompile PackerInstall
 command! Pc PackerClean
 
 command! So so
