@@ -48,6 +48,7 @@ packer.startup(function()
     -- 'thmsmlr/nvim-treesitter',
     'nvim-treesitter/nvim-treesitter',
     requires = {
+      'nvim-treesitter/playground',
       'nvim-treesitter/nvim-treesitter-textobjects',
       'p00f/nvim-ts-rainbow',
       'JoosepAlviste/nvim-ts-context-commentstring',
@@ -114,6 +115,7 @@ packer.startup(function()
   use { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
   use { 'ggandor/leap.nvim' }
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
+  use { '~/Git/plugin/cactusbuddy' }
   -- use { 'antoinemadec/FixCursorHold.nvim' }
 end)
 
