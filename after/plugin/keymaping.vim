@@ -145,7 +145,6 @@ command! Telescopefy Telescope frecency default_text=:CWD:
 command! Reloader lua require('telescope').reloader()
 
 command! Ps PackerSync
-command! Pi source % | PackerCompile PackerInstall
 command! Pc PackerClean
 
 command! So so
@@ -180,3 +179,19 @@ nnoremap <expr> <CR> {-> v:hlsearch ? ":nohl\<CR>" : "\<CR>"}()
 
 " grep hightlite
 nnoremap <leader>sh <cmd>TSHighlightCapturesUnderCursor<CR>
+nnoremap q :bd<cr>
+
+function! s:ll()
+
+endfunction
+
+
+function! Pac()
+   echo "hello, world"
+   write %
+   source after/plugin/packer.lua 
+   PackerCompile 
+   PackerClean
+   PackerInstall
+endfunction
+command! Pi call Pac()
