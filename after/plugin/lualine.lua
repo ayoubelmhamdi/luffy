@@ -2,7 +2,8 @@
 --   return
 -- end
 
-local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis,str)
+local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis)
+  return function(str)
     local win_width = vim.fn.winwidth(0)
     if hide_width and win_width < hide_width then
       return ''
@@ -10,6 +11,7 @@ local function trunc(trunc_width, trunc_len, hide_width, no_ellipsis,str)
       return str:sub(1, trunc_len) .. (no_ellipsis and '' or '...')
     end
     return str
+  end
 end
 
 local lsp_status = function()
