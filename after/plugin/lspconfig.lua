@@ -65,6 +65,7 @@ local on_attach = function(client, bufnr)
   -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
 end
 
+-- local servers = { 'pyright', 'rust_analyzer', 'tsserver', 'dartls', 'texlab' }
 local servers = { 'clangd', 'pyright', 'rust_analyzer', 'tsserver', 'dartls', 'texlab' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
