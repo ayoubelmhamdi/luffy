@@ -115,7 +115,8 @@ packer.startup(function()
   use { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
   use { 'ggandor/leap.nvim' }
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
-  use { '~/Git/plugin/cactusbuddy' }
+  use { '~/Git/plugin/ayoubbuddy' }
+  use { 'ThePrimeagen/harpoon'}
   -- use { 'antoinemadec/FixCursorHold.nvim' }
 end)
 
