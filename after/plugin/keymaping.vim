@@ -1,5 +1,5 @@
 "
-nnoremap <C-W><C-S> :vert sbN<cr>
+nnoremap <C-w><C-s> :vert sbN<cr>
 nnoremap gn :tabnew<CR>
 nnoremap q: :q
 " Telescope:
@@ -10,9 +10,13 @@ nnoremap <Space>fb  <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <Space>fh  <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <Space>ff  <cmd>lua require('telescope.builtin').find_files({ find_command = { 'fd','-tf','-tl'}})<cr>
 
+nnoremap <Space>fh  <cmd>:lua require("harpoon.ui").toggle_quick_menu()<cr>
+nnoremap <Space>fa  <cmd>:lua require("harpoon.mark").add_file()<cr>
+nnoremap <Space>fn  <cmd>:lua require("harpoon.ui").nav_next()<cr>
+nnoremap <Space>fp  <cmd>:lua require("harpoon.ui").nav_prev()<cr>
 
 nnoremap <Space>f. :lua require('tsp.cwd-tsp').search_dotfiles()<cr> 
-nnoremap <Space>fn :lua require('tsp.cwd-tsp').search_nvim()<cr> 
+nnoremap <Space>f- :lua require('tsp.cwd-tsp').search_nvim()<cr> 
 nnoremap <Space>fw :lua require('tsp.cwd-tsp').search_wiki()<cr> 
 nnoremap <Space>f1 :lua require('tsp.cwd-tsp').search_proj("sl")<cr> 
 nnoremap <Space>f2 :lua require('tsp.cwd-tsp').search_proj("slstatus")<cr> 
@@ -48,7 +52,7 @@ nnoremap J mzJ`z
 
 
 " FLUTTER
-nnoremap <silent> <Space>fp :FlutterPubGet<cr>
+" nnoremap <silent> <Space>fp :FlutterPubGet<cr>
 " nnoremap <silent> <Space>fr :FlutterRun<cr>
 " nnoremap <silent> <Space>ft :FlutterRestart<cr>
 " nnoremap <silent> <Space>fq :FlutterQuit<cr>
