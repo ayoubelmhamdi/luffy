@@ -1,13 +1,20 @@
 " fold
-:highlight Folded guibg=NONE
-" auther
+hi Folded guibg=NONE
 
 hi TabLineFill guibg=#282828
 hi TabLineSel guifg=#ffffff guibg=#880088
 hi TabLine    guifg=#909090  guibg=#282828
 hi signcolumn guifg=NONE guibg=NONE
+
+
+" line number
+set rnu
+set numberwidth=4 " the width of widget
+hi LineNr  guifg=#505050   guibg=NONE
+" hi Normal  guifg=White     guibg=Black
+
 " transparent backgroub
-"hi Normal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 
 
 " restore cursor position
@@ -21,9 +28,6 @@ hi signcolumn guifg=NONE guibg=NONE
 
 
 set guifont=FiraCode\ Nerd\ Font:h14
-" TODO to lua for mprove sturtup 
-au BufRead,BufNewFile *.conf		setfiletype bash
-au BufRead,BufNewFile *.fish		setfiletype fish
 
 " Errors in Red
 hi LspDiagnosticsVirtualTextError guifg=Red ctermfg=Red
