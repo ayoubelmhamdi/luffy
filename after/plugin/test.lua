@@ -1,15 +1,19 @@
 require('flutter-tools').setup {}
-require 'colorizer'.setup()
+-- require 'colorizer'.setup()
 
 -- require('tsp')
 
+--
+--
+--
+--
+--
+--
 
 vim.cmd [[
-hi GitSignsAdd    guibg=NONE
-hi GitSignsChange guibg=NONE
-hi GitSignsDelete guibg=NONE
-hi GitSignsDelete guibg=NONE
-hi GitSignsChange guibg=NONE
+hi GitSignsAdd    guibg=NONE guifg=#042525
+hi GitSignsChange guibg=NONE guifg=#252204
+hi GitSignsDelete guibg=NONE guifg=#340504
 ]]
 
 require('gitsigns').setup {
