@@ -22,15 +22,15 @@ vnoremap X "_X
 vnoremap c "_c
 vnoremap C "_C
 
-noremap  y "*y
-noremap  Y "*Y
-vnoremap y "*y
-vnoremap Y "*Y
+noremap  y y
+noremap  Y Y
+vnoremap y y
+vnoremap Y Y
 
-noremap  p "*pgvy
-noremap  P "*Pgvy
-vnoremap p "*pgvy
-vnoremap P "*Pgvy
+noremap  p pgvy
+noremap  P Pgvy
+vnoremap p pgvy
+vnoremap P Pgvy
 ]]
 
 -- Switch between tabs
