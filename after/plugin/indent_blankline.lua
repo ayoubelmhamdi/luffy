@@ -1,16 +1,15 @@
 -- if true then return end
-vim.opt.termguicolors = true
 vim.opt.list = true
 vim.opt.listchars:append "eol:↴"
 -- vim.opt.listchars:append "space:⋅"
 
 vim.cmd[[
-hi Indent1 guifg=#0A0A0A gui=nocombine
-hi Indent2 guifg=#1A1A1A gui=nocombine
-hi Indent3 guifg=#1A1A1A gui=nocombine
-hi Indent4 guifg=#1A1A1A gui=nocombine
-hi Indent5 guifg=#1A1A1A gui=nocombine
-hi Indent6 guifg=#1A1A1A gui=nocombine
+hi Indent1 guifg=#3A2A1A gui=nocombine
+hi Indent2 guifg=#3A2A1A gui=nocombine
+hi Indent3 guifg=#3A2A1A gui=nocombine
+hi Indent4 guifg=#3A2A1A gui=nocombine
+hi Indent5 guifg=#3A2A1A gui=nocombine
+hi Indent6 guifg=#3A2A1A gui=nocombine
 ]]
 
 
