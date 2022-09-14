@@ -116,8 +116,13 @@ packer.startup(function()
   use { 'ggandor/leap.nvim' }
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
   use { '~/Git/plugin/ayoubbuddy' }
-  use { 'ThePrimeagen/harpoon'}
+  use { 'ThePrimeagen/harpoon' }
   -- use { 'antoinemadec/FixCursorHold.nvim' }
+  use 'B4mbus/oxocarbon-lua.nvim'
+
+  -- use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
+  use { 'WhoIsSethDaniel/lualine-lsp-progress.nvim' }
+  use { 'nvim-lua/lsp-status.nvim' }
 end)
 
 -- vim.cmd [[autocmd BufWritePost packer.lua source <afile> | PackerCompile]]
