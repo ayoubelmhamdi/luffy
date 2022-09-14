@@ -2,8 +2,11 @@ require('impatient')
 
 vim.g.mapleader = ' '
 vim.opt.termguicolors = true
--- vim.o.background = 'dark'
--- vim.cmd 'colorscheme gruvbox'
+vim.o.background = 'dark'
 
-vim.cmd 'set cole=1'
-vim.cmd 'set switchbuf=usetab'
+vim.cmd 'colorscheme oxocarbon-lua'
+-- vim.cmd 'colorscheme gruvbox'
+--
+-- vim.cmd 'set cole=1'
+-- vim.cmd 'set switchbuf=usetab'
+
