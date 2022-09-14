@@ -10,7 +10,8 @@ set whichwrap=b,s,<,>,h,l,[,]
 set nojoinspaces 
 set linespace=5
 " -- Make substitution work in realtime
-set clipboard+=unnamedplus
+" set clipboard+=unnamedplus
+set clipboard^=unnamed
 set inccommand=split 
 
 
