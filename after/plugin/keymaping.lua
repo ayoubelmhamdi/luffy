@@ -1,4 +1,3 @@
-
 -- highlight text on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
@@ -11,7 +10,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
-vim.cmd[[
+vim.cmd [[
 nnoremap x "_x
 nnoremap X "_X
 nnoremap c "_c
@@ -22,8 +21,8 @@ vnoremap X "_X
 vnoremap c "_c
 vnoremap C "_C
 
-noremap  y "*y
-noremap  Y "*Y
+" noremap  y "*y
+" noremap  Y "*Y
 vnoremap y "*y
 vnoremap Y "*Y
 "
@@ -35,7 +34,6 @@ vnoremap P "*Pgvy
 --   lately
 -- lately lately
 --
-
 
 -- Switch between tabs
 -- local opts = { noremap = true, silent = true }
