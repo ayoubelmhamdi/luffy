@@ -199,3 +199,10 @@ function! Pac()
    PackerInstall
 endfunction
 command! Pi call Pac()
+
+function! ResReg()
+    unmap y
+    unmap Y
+endfunction
+
+nnoremap gt viW"dy:tabnew <c-r>d<cr>
