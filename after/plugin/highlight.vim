@@ -8,7 +8,7 @@ hi signcolumn guifg=NONE guibg=NONE
 
 
 " line number
-set rnu
+set rnu nu
 set numberwidth=4 " the width of widget
 hi LineNr  guifg=#505050   guibg=NONE
 " hi Normal  guifg=White     guibg=Black
