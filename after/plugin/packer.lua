@@ -5,6 +5,7 @@ local packer = require 'packer'
 local use = packer.use
 packer.startup(function()
   packer.init {
+    max_jobs = 4,
     display = {
       open_cmd = '84vnew [packer]',
       working_sym = '北 ',
@@ -14,7 +15,7 @@ packer.startup(function()
       moved_sym = '-> ',
     },
     depth = 1, -- Git clone depth
-    clone_timeout = 60, -- Timeout, in seconds, for git clones
+    clone_timeout = 600, -- Timeout, in seconds, for git clones
   }
 
   use { 'wbthomason/packer.nvim', requires = { 'nvim-lua/popup.nvim', 'kyazdani42/nvim-web-devicons' } }
@@ -115,7 +116,7 @@ packer.startup(function()
   use { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' }
   use { 'ggandor/leap.nvim' }
   use { 'kevinhwang91/nvim-ufo', requires = 'kevinhwang91/promise-async' }
-  use { '~/Git/plugin/ayoubbuddy' }
+  -- use { '~/Git/plugin/ayoubbuddy' }
   use { 'ThePrimeagen/harpoon' }
   -- use { 'antoinemadec/FixCursorHold.nvim' }
   use 'B4mbus/oxocarbon-lua.nvim'
