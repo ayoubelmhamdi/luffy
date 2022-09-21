@@ -1,18 +1,25 @@
 -- if true then return end
 
 local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 -- capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
 
-vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-  underline = true,
-  update_in_insert = false,
-  virtual_text = true,
-})
-vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' })
-vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' })
+local handlers = {
+
+  ['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    update_in_insert = false,
+    virtual_text = true,
+  }),
+  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
+  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded' }),
+}
 
 local on_attach = function(client, bufnr)
-  require('nvim-navic').attach(client, bufnr)
+  -- plugins
+  -- show the class>fun>int
+  -- require('nvim-navic').attach(client, bufnr)
+
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
@@ -69,13 +76,32 @@ end
 local servers = { 'clangd', 'pyright', 'rust_analyzer', 'tsserver', 'dartls', 'texlab' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup {
-    on_attach = on_attach,
+    handlers = handlers,
     capabilities = capabilities,
+    on_attach = on_attach,
     flags = { debounce_text_changes = 150 },
   }
 end
 
--- lua
+require('lspconfig').grammarly.setup {
+  handlers = handlers,
+  on_attach = on_attach,
+  capabilities = capabilities,
+  init_options = { clientId = 'client_BaDkMgx4X19X9UxxYRCXZo' },
+}
+
+-- clangd server setup
+local clangd_capabilities = capabilities
+clangd_capabilities.offsetEncoding = 'utf-8'
+
+require('lspconfig').clangd.setup {
+  handlers = handlers,
+  capabilities = clangd_capabilities,
+  on_attach = on_attach,
+  single_file_support = true,
+}
+
+-- lua sumneko
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
@@ -86,6 +112,7 @@ local lua_dev = require('lua-dev').setup {
     plugins = true,
   },
   lspconfig = {
+    handlers = handlers,
     capabilities = capabilities,
     cmd = { 'sumneko' },
     on_attach = on_attach,
@@ -131,11 +158,10 @@ local lua_dev = require('lua-dev').setup {
           library = {
             vim.api.nvim_get_runtime_file('', true),
           },
-        checkThirdParty = false, -- FIX the sumneko need config
-        -- Make the server await for loading Neovim runtime files
-        maxPreload = 1000,
-        preloadFileSize = 500,
-
+          checkThirdParty = false, -- FIX the sumneko need config
+          -- Make the server await for loading Neovim runtime files
+          maxPreload = 1000,
+          preloadFileSize = 500,
         },
         telemetry = {
           enable = false,
@@ -144,6 +170,5 @@ local lua_dev = require('lua-dev').setup {
     },
   },
 }
-
 
 require('lspconfig').sumneko_lua.setup(lua_dev)
