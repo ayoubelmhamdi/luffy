@@ -1,16 +1,30 @@
-require('luasnip.loaders.from_lua').lazy_load()
-require('luasnip/loaders/from_snipmate').lazy_load()
-
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
-vim.g.mapleader = ' '
-vim.opt.termguicolors = true
-
-local cmp = require 'cmp'
+------------------------------luasnip-----------------------------------------------------
+require('luasnip.loaders.from_lua').lazy_load()
+require('luasnip/loaders/from_snipmate').lazy_load()
 local ls = require 'luasnip'
--- local lspkind = require("lspkind")
 local types = require 'luasnip.util.types'
 
+ls.config.set_config {
+  history = false,
+  update_events = 'TextChanged,TextChangedI',
+  delete_check_events = 'TextChanged',
+  ext_opts = {
+    [types.choiceNode] = {
+      active = {
+        virt_text = { { '<-- choiceNode', 'Comment' } },
+      },
+    },
+  },
+  ext_base_prio = 300,
+  ext_prio_increase = 1,
+  enable_autosnippets = true,
+  store_selection_keys = '<Tab>',
+  ft_func = function()
+    return vim.split(vim.bo.filetype, '.', true)
+  end,
+}
 --
 
 My_Symbols = {
@@ -47,27 +61,64 @@ My_Symbols = {
   Variable = ' ', -- ' ', -- ' ',
 }
 
--- local source_mapping = {
---     luasnip = "[snip]",
---     buffer = "[buf]",
---     nvim_lsp = "[LSP]",
---     nvim_lua = "[api]",
---     path = "[path]",
---     gh_issues = "[issues]",
---     -- cmp_tabnine = "[TabNine]",
---     latex_symbols = "symbol",
--- }
+------------------------------cmp-----------------------------------------------------
+local cmp = require 'cmp'
 
 cmp.setup {
-  snippet = {
-    expand = function(args)
-      ls.lsp_expand(args.body)
+  formatting = {
+    fields = { 'kind', 'abbr', 'menu' },
+    format = function(entry, vim_item)
+      vim_item.menu = ({
+        buffer = '[Buffer]',
+        nvim_lsp = '[LSP]',
+        nvim_lua = '[API]',
+        path = '[Filesystem]',
+        luasnip = '[Snippet]',
+        spell = '[Spell]',
+        browser = '[BROWSER]',
+        look = '[LOOK]',
+      })[entry.source.name]
+      vim_item.kind = My_Symbols[vim_item.kind]
+      return vim_item
     end,
   },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
+
+  sources = cmp.config.sources {
+    { name = 'luasnip', priority = 100 }, -- For luasnip users.
+    { name = 'nvim_lua', priority = 90 },
+    { name = 'nvim_lsp', priority = 90 },
+    { name = 'nvim_lsp_signature_help', priority = 100 },
+    { name = 'path', option = { trailing_slash = true }, priority = 80 },
+    { name = 'cmp_tabnine', priority = 70 },
+    { name = 'treesitter', priority = 80 },
+    -- { name = 'spell' }, { name = 'spell', keyword_length = 2 },
+    {
+      name = 'look',
+      priority = 60,
+      keyword_length = 2,
+      option = {
+        convert_case = true,
+        loud = true,
+        --dict = '/usr/share/dict/words'
+      },
+    },
+    {
+      name = 'buffer',
+      priority = 70,
+      option = {
+        get_bufnrs = function()
+          local buf = vim.api.nvim_get_current_buf()
+          local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+          if byte_size > 2048 * 2048 then
+            return {}
+          end
+          return { buf }
+        end,
+      },
+    },
+    -- { name = 'browser' },
   },
+
   mapping = {
     ['<C-n>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
     ['<C-p>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
@@ -75,7 +126,6 @@ cmp.setup {
     ['<C-o>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-u>'] = cmp.mapping.scroll_docs(4),
     ['<C-y>'] = cmp.mapping.abort(),
     ['<c-e>'] = cmp.mapping(
       cmp.mapping.confirm {
@@ -86,9 +136,7 @@ cmp.setup {
     ),
     ['<c-space>'] = cmp.mapping {
       i = cmp.mapping.complete(),
-      c = function(
-        _ --[[fallback]]
-      )
+      c = function()
         if cmp.visible() then
           if not cmp.confirm { select = true } then
             return
@@ -101,78 +149,30 @@ cmp.setup {
     ['<tab>'] = cmp.config.disable,
     ['<down>'] = cmp.config.disable,
     ['<up>'] = cmp.config.disable,
-    -- Testing
-    ['<c-q>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
   },
-  sources = cmp.config.sources {
-    { name = 'luasnip', priority = 100 }, -- For luasnip users.
-    { name = 'nvim_lua' },
-    { name = 'nvim_lsp' },
-    { name = 'nvim_lsp_signature_help' },
-    { name = 'path', option = { trailing_slash = true } },
-    { name = 'cmp_tabnine' },
-    { name = 'spell' },
-    {
-      name = 'buffer',
-      option = {
-        get_bufnrs = function()
-          local buf = vim.api.nvim_get_current_buf()
-          local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
-          if byte_size > 2048 * 2048 then
-            return {}
-          end
-          return { buf }
-        end,
-      },
-    },
+  snippet = {
+    expand = function(args)
+      ls.lsp_expand(args.body)
+    end,
   },
-  sorting = {
-    comparators = {
-      function(...)
-        return require('cmp_buffer'):compare_locality(...)
-      end,
-    },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
+  -- sorting = {
+  --   comparators = {
+  --     function(...)
+  --       return require('cmp_buffer'):compare_locality(...)
+  --     end,
+  --   },
+  -- },
   experimental = {
     native_menu = false,
     ghost_text = true,
   },
-
-  formatting = {
-    fields = { 'kind', 'abbr', 'menu' },
-    format = function(entry, vim_item)
-      vim_item.menu = ({
-        buffer = '[Buffer]',
-        nvim_lsp = '[LSP]',
-        nvim_lua = '[API]',
-        path = '[Filesystem]',
-        luasnip = '[Snippet]',
-        spell = '[Spell]',
-      })[entry.source.name]
-      vim_item.kind = My_Symbols[vim_item.kind]
-      return vim_item
-    end,
-  },
-
-  -- formatting = {
-  --     format = function(entry, vim_item)
-  --               vim_item.kind = lspkind.presets.default[vim_item.kind]
-  --               local menu = source_mapping[entry.source.name]
-  --               -- if entry.source.name == 'cmp_tabnine' then
-  --               --     if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-  --               --         menu = entry.completion_item.data.detail .. ' ' .. menu
-  --               --     end
-  --               --     vim_item.kind = ''
-  --               -- end
-  --               vim_item.menu = menu
-  --               return vim_item
-  --           end
-  --       },
 }
 
+-- TODO: max of sug
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
@@ -208,26 +208,6 @@ _ = vim.cmd [[
 --     autocmd Filetype tex lua require'cmp'.setup.buffer { sources = { { name = "latex_symbols" }, } }
 --   augroup END
 -- ]]
-
-ls.config.set_config {
-  history = false,
-  update_events = 'TextChanged,TextChangedI',
-  delete_check_events = 'TextChanged',
-  ext_opts = {
-    [types.choiceNode] = {
-      active = {
-        virt_text = { { '<-- choiceNode', 'Comment' } },
-      },
-    },
-  },
-  ext_base_prio = 300,
-  ext_prio_increase = 1,
-  enable_autosnippets = true,
-  store_selection_keys = '<Tab>',
-  ft_func = function()
-    return vim.split(vim.bo.filetype, '.', true)
-  end,
-}
 
 vim.keymap.set({ 'i', 's' }, '<c-j>', function()
   if ls.expand_or_jumpable() then
