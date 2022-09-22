@@ -69,9 +69,12 @@ packer.startup(function()
   use { 'hrsh7th/cmp-cmdline' }
   use { 'L3MON4D3/LuaSnip' }
   use { 'saadparwaiz1/cmp_luasnip' }
-  use { 'f3fora/cmp-spell' }
+  use { 'ray-x/cmp-treesitter' }
+  -- use { 'f3fora/cmp-spell' }
   -- use { 'hrsh7th/cmp-emoji' }
-  -- use { 'octaltree/cmp-look' }
+  use { 'octaltree/cmp-look' }
+  --test get suggestions from all stings in all pages webs opend by chrome
+  use { 'wxxxcxx/cmp-browser-source' }
 
   -- dap
   use { 'mfussenegger/nvim-dap' }
