@@ -2,6 +2,7 @@
 nnoremap <C-w><C-s> :vert sbN<cr>
 nnoremap gn :tabnew<CR>
 nnoremap q: :q
+inoremap jk <Esc>
 " Telescope:
 nnoremap <Space>fd  :Telescopefindfiledart<cr>
 nnoremap <Space>fs  :Telescope current_buffer_fuzzy_find<cr>

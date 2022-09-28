@@ -25,7 +25,7 @@ set shiftwidth=4
 set expandtab
 set smarttab
 
-set backspace=indent,eol,start
+"set backspace=indent,eol,start
 " set colorcolumn=110
 set showtabline=2
 "set cursorline
@@ -35,9 +35,10 @@ set updatetime=300
 set wildignore+=*.o,*.obj,.git,*.pyc
 
 
-set noswapfile nowritebackup undofile nobackup
-set backupdir=/tmp/nvim/backup
-set undodir+=/tmp/nvim/undodir
+set noswapfile noundofile nobackup
+set backupdir=/tmp/nvim/backup//
+set directory=/tmp/nvim/backup//
+set undodir=/tmp/nvim/backup//
 
 set autoread autowrite
 set ignorecase smartcase
