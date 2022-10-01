@@ -1,5 +1,5 @@
 # Luffy
-is a neovim config without using the `init.lua` or `lua/`
+is a **neovim** config without using the `init.lua` or `lua/`
 
 1. [Philosophy](#Philosophy)
 2. [Install packer](#install-packer)
