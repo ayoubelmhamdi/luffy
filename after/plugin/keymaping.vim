@@ -132,6 +132,7 @@ nnoremap <silent> <A-k> :MoveLine(-1)<CR>
 vnoremap <silent> <A-j> :MoveBlock(1)<CR>
 vnoremap <silent> <A-k> :MoveBlock(-1)<CR>
 
+setlocal! spell! spelllang=en,fr
 " togle
 " nnoremap <F6> :setlocal! spell! spelllang=en,fr<cr>
 
