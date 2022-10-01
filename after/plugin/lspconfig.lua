@@ -84,12 +84,12 @@ for _, lsp in pairs(servers) do
   }
 end
 
-require('lspconfig').grammarly.setup {
-  handlers = handlers,
-  on_attach = on_attach,
-  capabilities = capabilities,
-  init_options = { clientId = 'client_BaDkMgx4X19X9UxxYRCXZo' },
-}
+-- require('lspconfig').grammarly.setup {
+--   handlers = handlers,
+--   on_attach = on_attach,
+--   capabilities = capabilities,
+--   init_options = { clientId = 'client_BaDkMgx4X19X9UxxYRCXZo' },
+-- }
 
 -- clangd server setup
 local clangd_capabilities = capabilities
@@ -100,6 +100,46 @@ require('lspconfig').clangd.setup {
   capabilities = clangd_capabilities,
   on_attach = on_attach,
   single_file_support = true,
+}
+
+-- require('lspconfig').ltex.setup { cmd = { '/home/mhamdi/.cache/ltex-ls-15.2.0/bin/ltex-ls' } }
+-- ltex: open source Grammar
+-- s.getenv("HOME")
+local lang = os.getenv 'PROJECT_LANG' or 'en'
+require('lspconfig').ltex.setup {
+  handlers = handlers,
+  -- capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    -- your other on_attach functions.
+    on_attach(client, bufnr)
+    require('ltex_extra').setup {
+      -- load_langs = { 'fr' }, -- table <string> : languages for witch dictionaries will be loaded
+      init_check = true, -- boolean : whether to load dictionaries on startup
+      path = nil, -- string : path to store dictionaries. Relative path uses current working directory
+      log_level = 'none', -- string : "none", "trace", "debug", "info", "warn", "error", "fatal"
+    }
+  end,
+  settings = {
+    ltex = {
+      language = lang,
+      diagnosticSeverity = 'information',
+      setenceCacheSize = 2000,
+      additionalRules = {
+        enablePickyRules = true,
+        motherTongue = 'en',
+      },
+      trace = { server = 'verbose' },
+      dictionary = {},
+      disabledRules = {
+        -- ['en'] = { 'MORFOLOGIK_RULE_EN' },
+        -- ['en-GB'] = { 'MORFOLOGIK_RULE_EN_GB' },
+        -- ['en-US'] = { 'MORFOLOGIK_RULE_EN_US' },
+        -- ['it'] = { 'MORFOLOGIK_RULE_IT_IT' },
+      },
+      hiddenFalsePositives = {},
+      -- languageToolHttpServerUri = 'http://localhost:8081/v2',
+    },
+  },
 }
 
 -- lua sumneko
