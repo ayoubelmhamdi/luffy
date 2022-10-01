@@ -4,6 +4,7 @@
 
 "set scrolloff=99
 "set sidescrolloff=99
+set spellsuggest+=10
 set linebreak
 set path+=**
 set whichwrap=b,s,<,>,h,l,[,]
