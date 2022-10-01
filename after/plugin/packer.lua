@@ -127,6 +127,7 @@ packer.startup(function()
   -- use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
   use { 'WhoIsSethDaniel/lualine-lsp-progress.nvim' }
   use { 'nvim-lua/lsp-status.nvim' }
+  use { 'barreiroleo/ltex-extra.nvim' }
 end)
 
 -- vim.cmd [[autocmd BufWritePost packer.lua source <afile> | PackerCompile]]
