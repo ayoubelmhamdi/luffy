@@ -128,6 +128,7 @@ packer.startup(function()
   use { 'WhoIsSethDaniel/lualine-lsp-progress.nvim' }
   use { 'nvim-lua/lsp-status.nvim' }
   use { 'barreiroleo/ltex-extra.nvim' }
+  use { 'stevearc/overseer.nvim' }
 end)
 
 -- vim.cmd [[autocmd BufWritePost packer.lua source <afile> | PackerCompile]]
