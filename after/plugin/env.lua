@@ -1,3 +1,6 @@
+if true then
+    return
+end
 -- local vimrc = vim.fn.findfile('run_buf.lua', ',;')
 -- if string.len(vimrc) >= 1 then
 --   print('vimrc: ' .. vimrc)
