@@ -1,3 +1,4 @@
+-- if true then return end
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
   pattern = {
     '*.css',
