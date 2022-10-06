@@ -45,7 +45,8 @@ set autoread autowrite
 set ignorecase smartcase
 " set list listchars=eol:⏎
 
-set cmdheight=1
+" bug here
+" set cmdheight=1
 
 set nohlsearch
 augroup vimrc-incsearch-highlight
