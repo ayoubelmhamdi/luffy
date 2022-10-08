@@ -28,18 +28,10 @@ vnoremap C "_C
 "
 " noremap  p md"+pgvy`d
 " noremap  P md"+Pgvy`d
-noremap  p p
-noremap  P P
+" noremap  p p
+" noremap  P P
 vnoremap p pgvy
 vnoremap P Pgvy
-
-nnoremap <space>y "+y
-nnoremap <space>Y "+Y
-nnoremap <space>yy "+yy
-
-vnoremap <space>y "+y
-vnoremap <space>Y "+Y
-vnoremap <space>yy "+yy
 
 cnoremap <C-v> <C-r>+
 ]]
